@@ -1,6 +1,7 @@
 package Project2;
 
 
+
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -18,6 +19,8 @@ public class Ship {
     private BattleField battleField;
     private int[] startField = new int[2];
     private int[] endField = new int[2];
+    private boolean sunken = false;
+    private int life;
 
     enum ShipType {
         AIRCRAFT_CARRIER, BATTLESHIP, SUBMARINE, CRUISER, DESTROYER
@@ -27,18 +30,23 @@ public class Ship {
         this.battleField = battleField;
         if (ship == ShipType.AIRCRAFT_CARRIER) {
             this.length = AIRCRAFT_CARRIER_LENGTH;
+            this.life = AIRCRAFT_CARRIER_LENGTH;
             this.name = "Aircraft Carrier";
         } else if (ship == ShipType.BATTLESHIP) {
             this.length = BATTLESHIP_LENGTH;
+            this.life = BATTLESHIP_LENGTH;
             this.name = "Battleship";
         } else if (ship == ShipType.SUBMARINE) {
             this.length = SUBMARINE_LENGTH;
+            this.life = SUBMARINE_LENGTH;
             this.name = "Submarine";
         } else if (ship == ShipType.CRUISER) {
             this.length = CRUISER_LENGTH;
+            this.life = CRUISER_LENGTH;
             this.name = "Cruiser";
         } else if (ship == ShipType.DESTROYER) {
             this.length = DESTROYER_LENGTH;
+            this.life = DESTROYER_LENGTH;
             this.name = "Destroyer";
         }
         startPlaceShip();
@@ -65,20 +73,20 @@ public class Ship {
         }
         if (this.startField[0] == this.endField[0]) {
             for (int i = this.startField[1]; i <= this.endField[1]; i++) {
-                battleField.setFieldStatus(startField[0], i, Field.FieldStatus.SHIP);
+                battleField.setShip(startField[0], i, this);
             }
         } else {
             for (int i = this.startField[0]; i <= this.endField[0]; i++) {
-                battleField.setFieldStatus(i, startField[1], Field.FieldStatus.SHIP);
+                battleField.setShip(i, startField[1], this);
             }
         }
     }
 
     private void checkInputFormat (char line, int colum) {
         if (colum < 0 || colum > 10) {
-            throw new IllegalArgumentException("Invalid colum input");
+            throw new IllegalArgumentException("Error! Wrong ship location! Try again:");
         } else if (line < 'A' || line > 'J') {
-            throw new IllegalArgumentException("Invalid line input");
+            throw new IllegalArgumentException("Error! Wrong ship location! Try again:");
         }
     }
 
@@ -134,7 +142,7 @@ public class Ship {
 
     private void checkInputLength(int colum1, int line1, int colum2, int line2) {
         if (line1 != line2 && colum1 != colum2) {
-            throw new IllegalArgumentException("Invalid line input");
+            throw new IllegalArgumentException("Error! Wrong ship location! Try again:");
         } else if (line1 == line2 && colum2 - colum1 != this.length - 1) {
             throw new IllegalArgumentException("Error! Wrong length of the Submarine! Try again:");
         } else if (colum1 == colum2 && line2 - line1 != this.length - 1) {
@@ -147,15 +155,23 @@ public class Ship {
             for (int i = 0; i < this.length; i++) {
 
                 if (battleField.getFieldStatus(cordsA[0], cordsA[1] +i ) != Field.FieldStatus.FOG) {
-                      throw new IllegalArgumentException("Error! Wrong ship location! Try again:");
-                    }
-            }
-        } else {
-              for (int i = 0; i < this.length; i++) {
-                  if (battleField.getFieldStatus(cordsA[0] + i, cordsA[1]) != Field.FieldStatus.FOG) {
-                      throw new IllegalArgumentException("Error! Wrong ship location! Try again:");
+                    throw new IllegalArgumentException("Error! Wrong ship location! Try again:");
                 }
             }
+        } else {
+            for (int i = 0; i < this.length; i++) {
+                if (battleField.getFieldStatus(cordsA[0] + i, cordsA[1]) != Field.FieldStatus.FOG) {
+                    throw new IllegalArgumentException("Error! Wrong ship location! Try again:");
+                }
+            }
+        }
+    }
+
+    public void getHit() {
+        this.life -= 1;
+        if (this.life <= 0) {
+            sunken = true;
+            System.out.println("You sank a ship!");
         }
     }
 }

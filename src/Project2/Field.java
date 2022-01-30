@@ -6,6 +6,7 @@ import static Project2.Field.FieldStatus.*;
 public class Field{
 
     private FieldStatus status;
+    private Ship ship;
 
     enum FieldStatus {
         FOG, SHIP, HIT, MISS
@@ -19,8 +20,17 @@ public class Field{
         this.status = status;
     }
 
+    public void setShip(Ship ship) {
+        this.status = SHIP;
+        this.ship = ship;
+    }
+
     public FieldStatus getStatus() {
         return status;
+    }
+
+    public Ship getShip() {
+        return ship;
     }
 
     @Override

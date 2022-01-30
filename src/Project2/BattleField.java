@@ -17,12 +17,32 @@ public class BattleField {
         }
     }
 
+    public boolean checkScore() {
+        for (int i = 0; i < FIELD_SIZE; i++) {
+            for (int j = 0; j < FIELD_SIZE; j++) {
+                if (getFieldStatus(i, j) == Field.FieldStatus.SHIP) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
     public Field.FieldStatus getFieldStatus(int cordA, int cordB) {
         return battleField[cordA][cordB].getStatus();
     }
 
     public void setFieldStatus(int cordA, int cordB, Field.FieldStatus status) {
         battleField[cordA][cordB].setStatus(status);
+    }
+
+    public void setShip(int cordA, int cordB, Ship ship) {
+        battleField[cordA][cordB].setShip(ship);
+    }
+
+    public Ship getShip(int cordA, int cordB) {
+        return battleField[cordA][cordB].getShip();
     }
 
     @Override
