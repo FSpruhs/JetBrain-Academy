@@ -146,7 +146,7 @@ public class BudgetMenu {
     }
 
     public void startMenu() {
-        String menu = "\nChoose your action:\n" +
+        final String menu = "\nChoose your action:\n" +
                 "1) Add income\n" +
                 "2) Add purchase \n" +
                 "3) Show list of purchases \n" +
@@ -159,35 +159,39 @@ public class BudgetMenu {
         while (menuInput != 0) {
             System.out.println(menu);
             menuInput = scanner.nextInt();
-            switch (menuInput) {
-                case 0:
-                    System.out.println("\nBye!");
-                    break;
-                case 1:
-                    manager.addIncome();
-                    break;
-                case 2:
-                    chooseTypeOfPurchaseAdd();
-                    break;
-                case 3:
-                    chooseTypeOfPurchaseShowList();
-                    break;
-                case 4:
-                    manager.getBalance();
-                    break;
-                case 5:
-                    manager.save();
-                    break;
-                case 6:
-                    manager.load();
-                    break;
-                case 7:
-                    chooseTypeOfSort();
-                    break;
-                default:
-                    System.out.println("Wrong Input. Try again");
-                    break;
-            }
+            extracted(menuInput);
+        }
+    }
+
+    private void extracted(int menuInput) {
+        switch (menuInput) {
+            case 0:
+                System.out.println("\nBye!");
+                break;
+            case 1:
+                manager.addIncome();
+                break;
+            case 2:
+                chooseTypeOfPurchaseAdd();
+                break;
+            case 3:
+                chooseTypeOfPurchaseShowList();
+                break;
+            case 4:
+                manager.getBalance();
+                break;
+            case 5:
+                manager.save();
+                break;
+            case 6:
+                manager.load();
+                break;
+            case 7:
+                chooseTypeOfSort();
+                break;
+            default:
+                System.out.println("Wrong Input. Try again");
+                break;
         }
     }
 }
