@@ -1,4 +1,4 @@
-package main.java.Project5;
+package main.java.BudgetManager;
 
 
 public class Purchases {

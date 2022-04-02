@@ -1,7 +1,7 @@
-package main.java.Project6.commands;
+package main.java.PhoneBook.commands;
 
-import main.java.Project6.Record;
-import main.java.Project6.PhoneBook;
+import main.java.PhoneBook.Record;
+import main.java.PhoneBook.PhoneBook;
 
 public class AddCommand implements Command{
     private final Record record;

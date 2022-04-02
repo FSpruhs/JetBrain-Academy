@@ -1,4 +1,4 @@
-package main.java.Project6.commands;
+package main.java.PhoneBook.commands;
 
 public interface Command {
     void execute();

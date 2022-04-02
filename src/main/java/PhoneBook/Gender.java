@@ -1,4 +1,4 @@
-package main.java.Project6;
+package main.java.PhoneBook;
 
 public enum Gender {
     MALE, FEMALE
